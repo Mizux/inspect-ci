@@ -17,7 +17,7 @@ Just a sandbox project to reverse various runner configuration when using a `lan
 
 * runners: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/virtual-environments-for-github-hosted-runners#supported-runners-and-hardware-resources
 
-[This repository](https://github.com/actions/virtual-environments) contains the source used to create the virtual environments for GitHub Actions hosted runners.<br>
+The repository, [actions/virtual-environments](https://github.com/actions/virtual-environments), contains the source used to create the virtual environments for GitHub Actions hosted runners.<br>
 note: In the README.md (column `Included Software`) you can find a link to the list of installed software.
 
 note: each steps are independent, so env setting are forgotten.
