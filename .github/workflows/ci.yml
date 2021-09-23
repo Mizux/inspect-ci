@@ -11,12 +11,13 @@ jobs:
       run: env
     - name: Update PATH
       run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+    # Base
     - name: Git
       run: git --version
-    - name: CMake
-      run: cmake -version
     - name: Make
       run: make --version
+    - name: CMake
+      run: cmake -version
     - name: GCC
       run: gcc --version
     - name: G++
@@ -25,18 +26,24 @@ jobs:
       run: clang --version
     - name: CPU Flags
       run: cat /proc/cpuinfo | grep "flags"
+    # Java
+    - name: Java
+      run: mvn --version
+    # .Net
+    - name: .NET
+      run: dotnet --info
+    # Python
     - name: Python
       run: |
         python --version
         python -m site --user-base
-    - name: Python 3
+    - name: Python3
       run: |
         python3 --version
         python3 -m site --user-base
-    - name: Java
-      run: mvn --version
-    - name: .NET
-      run: dotnet --info
+    - name: Pip
+      run: |
+        pip --version
 
   build-windows:
     runs-on: windows-latest
@@ -44,20 +51,38 @@ jobs:
     - uses: actions/checkout@v2
     - name: env
       run: "Get-ChildItem Env:"
-    - name: Add PATH
-      run: echo "$((Get-Item ~).FullName)/appdata/roaming/python/python37/Scripts" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+    # Base
     - name: Git
       run: git --version
+    - name: Make
+      run: make --version
     - name: CMake
       run: cmake -version
+    # .Net
+    - name: .NET
+      run: dotnet --info
+    # Java
+    - name: Java
+      run: mvn --version
+    # Python
     - name: Python
       run: |
         python --version
         python -m site --user-base
-    - name: Java
-      run: mvn --version
-    - name: .NET
-      run: dotnet --info
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+    - name: Python
+      run: |
+        python --version
+        python -m site --user-base
+    - name: Python3
+      run: |
+        python3 --version
+        python3 -m site --user-base
+    - name: Pip
+      run: |
+        pip --version
 
   build-osx:
     runs-on: macos-latest
@@ -65,14 +90,19 @@ jobs:
     - uses: actions/checkout@v2
     - name: env
       run: env
-    - name: Add PATH
-      run: echo "$HOME/Library/Python/3.9/bin" >> $GITHUB_PATH
+    # Base
     - name: Git
       run: git --version
-    - name: CMake
-      run: cmake -version
     - name: Make
       run: make --version
+    - name: Install brew Make
+      run: |
+        brew install make
+        echo "/usr/local/opt/make/libexec/gnubin" >> $GITHUB_PATH
+    - name: Make
+      run: make --version
+    - name: CMake
+      run: cmake -version
     - name: GCC
       run: gcc --version
     - name: G++
@@ -81,16 +111,24 @@ jobs:
       run: clang --version
     - name: CPU Flags
       run: "sysctl -a | grep machdep.cpu.features | cut -f2 -d: | tr . _"
+    # .Net
+    - name: .NET
+      run: dotnet --info
+    # Java
+    - name: Java
+      run: mvn --version
+    # Python
     - name: Python
       run: |
         python --version
         python -m site --user-base
-    - name: Python 3
+    - name: Pip
+      run: |
+        pip --version
+    - name: Python3
       run: |
         python3 --version
         python3 -m site --user-base
-    - name: Java
-      run: mvn --version
-    - name: .NET
-      run: dotnet --info
-
+    - name: Pip3
+      run: |
+        pip3 --version
