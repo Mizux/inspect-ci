@@ -1,0 +1,13 @@
+name: docker
+
+on: [push, pull_request]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+    - name: docker
+      run: docker info
+    - name: platform
+      run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+
