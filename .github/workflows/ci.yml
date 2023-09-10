@@ -3,7 +3,7 @@ name: CI
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  build-linux:
+  linux:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -45,7 +45,7 @@ jobs:
       run: |
         pip --version
 
-  build-windows:
+  windows:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
@@ -71,7 +71,7 @@ jobs:
         python -m site --user-base
     - uses: actions/setup-python@v2
       with:
-        python-version: '3.9'
+        python-version: '3.10'
     - name: Python
       run: |
         python --version
@@ -84,7 +84,7 @@ jobs:
       run: |
         pip --version
 
-  build-osx:
+  osx:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
@@ -132,3 +132,7 @@ jobs:
     - name: Pip3
       run: |
         pip3 --version
+    # Vagrant
+    - name: Vagrant
+      run: |
+        ( command -v vagrant && vagrant --version ) || true
