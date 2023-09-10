@@ -1,13 +1,39 @@
-name: docker
+name: Docker
 
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  docker:
+  Linux:
     runs-on: ubuntu-latest
     steps:
-    - name: docker
+    - uses: actions/checkout@v3
+    - name: docker version
+      run: docker version
+    - name: docker info
       run: docker info
-    - name: platform
-      run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+    - name: platforms
+      run: |
+        docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+        docker buildx ls
 
+  Windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: docker version
+      run: docker version
+    - name: docker info
+      run: docker info
+    - name: Pull image
+      run: docker pull mcr.microsoft.com/windows:1809
+    - name: Build image
+      run: docker build -f win.Dockerfile .
+
+  MacOS:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: docker version
+      run: docker version
+    - name: docker info
+      run: docker info
