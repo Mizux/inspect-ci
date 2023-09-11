@@ -1,4 +1,5 @@
-name: Docker
+# ref: https://github.com/actions/runner-images
+name: Docker Support
 
 on: [push, pull_request, workflow_dispatch]
 
@@ -16,19 +17,6 @@ jobs:
         docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
         docker buildx ls
 
-  Windows:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: docker version
-      run: docker version
-    - name: docker info
-      run: docker info
-    - name: Pull image
-      run: docker pull mcr.microsoft.com/windows:1809
-    - name: Build image
-      run: docker build -f win.Dockerfile .
-
   MacOS:
     runs-on: macos-latest
     steps:
@@ -37,3 +25,24 @@ jobs:
       run: docker version
     - name: docker info
       run: docker info
+
+  Windows:
+    strategy:
+      matrix:
+        runner: [
+          windows-latest,
+          windows-2022,
+          windows-2019,
+        ]
+      fail-fast: false # Don't cancel all jobs if one fails.
+    runs-on: ${{ matrix.runner }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: docker version
+      run: docker version
+    - name: docker info
+      run: docker info
+    - name: Pull image
+      run: docker pull mcr.microsoft.com/windows:ltsc2019
+    - name: Build image
+      run: docker build -f win.Dockerfile .

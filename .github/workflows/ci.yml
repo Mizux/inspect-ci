@@ -1,4 +1,5 @@
-name: CI
+# ref: https://github.com/actions/runner-images
+name: GitHub-hosted runners
 
 on: [push, pull_request, workflow_dispatch]
 
@@ -45,46 +46,7 @@ jobs:
       run: |
         pip --version
 
-  windows:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: env
-      run: "Get-ChildItem Env:"
-    # Base
-    - name: Git
-      run: git --version
-    - name: Make
-      run: make --version
-    - name: CMake
-      run: cmake -version
-    # .Net
-    - name: .NET
-      run: dotnet --info
-    # Java
-    - name: Java
-      run: mvn --version
-    # Python
-    - name: Python
-      run: |
-        python --version
-        python -m site --user-base
-    - uses: actions/setup-python@v2
-      with:
-        python-version: '3.10'
-    - name: Python
-      run: |
-        python --version
-        python -m site --user-base
-    - name: Python3
-      run: |
-        python3 --version
-        python3 -m site --user-base
-    - name: Pip
-      run: |
-        pip --version
-
-  osx:
+  macos:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
@@ -136,3 +98,42 @@ jobs:
     - name: Vagrant
       run: |
         ( command -v vagrant && vagrant --version ) || true
+
+  windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: env
+      run: "Get-ChildItem Env:"
+    # Base
+    - name: Git
+      run: git --version
+    - name: Make
+      run: make --version
+    - name: CMake
+      run: cmake -version
+    # .Net
+    - name: .NET
+      run: dotnet --info
+    # Java
+    - name: Java
+      run: mvn --version
+    # Python
+    - name: Python
+      run: |
+        python --version
+        python -m site --user-base
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+    - name: Python
+      run: |
+        python --version
+        python -m site --user-base
+    - name: Python3
+      run: |
+        python3 --version
+        python3 -m site --user-base
+    - name: Pip
+      run: |
+        pip --version

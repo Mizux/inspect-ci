@@ -1,32 +1,32 @@
-name: Vagrant
+name: Vagrant Support
 
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  build-linux:
+  linux:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: vagrant
-      run: vagrant --version
+      run: vagrant --version || true
     - name: virtualbox
-      run: virtualbox --help
+      run: virtualbox --help || true
 
-  build-windows:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: vagrant
-      run: vagrant --version
-    - name: virtualbox
-      run: virtualbox --help
-
-  build-osx:
+  macos:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
     - name: vagrant
-      run: vagrant --version
+      run: vagrant --version || true
     - name: virtualbox
-      run: virtualbox --help
+      run: virtualbox --help || true
+
+  windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: vagrant
+      run: vagrant --version || true
+    - name: virtualbox
+      run: virtualbox --help || true
 
