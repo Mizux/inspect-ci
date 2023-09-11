@@ -18,7 +18,9 @@ jobs:
     - name: Make
       run: make --version
     - name: CMake
-      run: cmake -version
+      run: |
+        cmake -version
+        cmake -G || true
     - name: GCC
       run: gcc --version
     - name: G++
@@ -64,7 +66,9 @@ jobs:
     - name: Make
       run: make --version
     - name: CMake
-      run: cmake -version
+      run: |
+        cmake -version
+        cmake -G || true
     - name: GCC
       run: gcc --version
     - name: G++
@@ -111,7 +115,9 @@ jobs:
     - name: Make
       run: make --version
     - name: CMake
-      run: cmake -version
+      run: |
+        cmake -version
+        cmake -G || true
     # .Net
     - name: .NET
       run: dotnet --info
