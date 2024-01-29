@@ -17,6 +17,6 @@ jobs:
       FIRST: ${{ matrix.foo[0] }}
       SECOND: ${{ matrix.foo[1] }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Print
       run: echo $FIRST $SECOND
