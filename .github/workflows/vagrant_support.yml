@@ -1,32 +1,50 @@
+# ref: https://github.com/actions/runner-images
 name: Vagrant Support
 
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
   linux:
+    name: Linux(ubuntu-latest)
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: vagrant
-      run: vagrant --version || true
-    - name: virtualbox
-      run: virtualbox --help || true
+      - uses: actions/checkout@v4
+      - name: vagrant
+        run: vagrant --version || true
+      - name: virtualbox
+        run: virtualbox --help || true
 
   macos:
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        runner: [
+          macos-latest, # M1
+          macos-13, # amd64
+        ]
+      fail-fast: false # Don't cancel all jobs if one fails.
+    name: MacOS(${{matrix.runner}})
+    runs-on: ${{matrix.runner}}
     steps:
-    - uses: actions/checkout@v4
-    - name: vagrant
-      run: vagrant --version || true
-    - name: virtualbox
-      run: virtualbox --help || true
+      - uses: actions/checkout@v4
+      - name: vagrant
+        run: vagrant --version || true
+      - name: virtualbox
+        run: virtualbox --help || true
 
   windows:
-    runs-on: windows-latest
+    strategy:
+      matrix:
+        runner: [
+          windows-latest,
+          windows-2022,
+          windows-2019,
+        ]
+      fail-fast: false # Don't cancel all jobs if one fails.
+    name: Windows(${{matrix.runner}})
+    runs-on: ${{matrix.runner}}
     steps:
-    - uses: actions/checkout@v4
-    - name: vagrant
-      run: vagrant --version || true
-    - name: virtualbox
-      run: virtualbox --help || true
-
+      - uses: actions/checkout@v4
+      - name: vagrant
+        run: vagrant --version || true
+      - name: virtualbox
+        run: virtualbox --help || true

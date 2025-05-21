@@ -5,143 +5,161 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   linux:
+    name: Linux(ubuntu-latest)
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Hardware
-      run: lscpu
-    - name: env
-      run: env
-    - name: Update PATH
-      run: echo "$HOME/.local/bin" >> $GITHUB_PATH
-    # Base
-    - name: Git
-      run: git --version
-    - name: Make
-      run: make --version
-    - name: CMake
-      run: |
-        cmake -version
-        cmake -G || true
-    - name: GCC
-      run: gcc --version
-    - name: G++
-      run: g++ --version
-    - name: Clang
-      run: clang --version
-    - name: CPU Flags
-      run: cat /proc/cpuinfo | grep "flags"
-    # Java
-    - name: Java
-      run: mvn --version
-    # .Net
-    - name: .NET
-      run: dotnet --info
-    # Python
-    - name: Python
-      run: |
-        python --version
-        python -m site --user-base
-    - name: Python3
-      run: |
-        python3 --version
-        python3 -m site --user-base
-    - name: Pip
-      run: |
-        pip --version
+      - uses: actions/checkout@v4
+      - name: Hardware
+        run: lscpu
+      - name: env
+        run: env
+      - name: Update PATH
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+      # Base
+      - name: Git
+        run: git --version
+      - name: Make
+        run: make --version
+      - name: CMake
+        run: |
+          cmake -version
+          cmake -G || true
+      - name: GCC
+        run: gcc --version
+      - name: G++
+        run: g++ --version
+      - name: Clang
+        run: clang --version
+      - name: CPU Flags
+        run: cat /proc/cpuinfo | grep "flags"
+      # Java
+      - name: Java
+        run: mvn --version
+      # .Net
+      - name: .NET
+        run: dotnet --info
+      # Python
+      - name: Python
+        run: |
+          python --version
+          python -m site --user-base
+      - name: Python3
+        run: |
+          python3 --version
+          python3 -m site --user-base
+      - name: Pip
+        run: |
+          pip --version
 
   macos:
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        runner: [
+          macos-latest, # M1
+          macos-13, # amd64
+        ]
+      fail-fast: false # Don't cancel all jobs if one fails.
+    name: MacOS(${{matrix.runner}})
+    runs-on: ${{matrix.runner}}
     steps:
-    - uses: actions/checkout@v4
-    - name: env
-      run: env
-    # Base
-    - name: Git
-      run: git --version
-    - name: Make
-      run: make --version
-    - name: Install brew Make
-      run: |
-        brew install make
-        echo "/usr/local/opt/make/libexec/gnubin" >> $GITHUB_PATH
-    - name: Make
-      run: make --version
-    - name: CMake
-      run: |
-        cmake -version
-        cmake -G || true
-    - name: GCC
-      run: gcc --version
-    - name: G++
-      run: g++ --version
-    - name: Clang
-      run: clang --version
-    - name: CPU Flags
-      run: "sysctl -a | grep machdep.cpu.features | cut -f2 -d: | tr . _"
-    # .Net
-    - name: .NET
-      run: dotnet --info
-    # Java
-    - name: Java
-      run: mvn --version
-    # Python
-    - name: Python
-      run: |
-        python --version
-        python -m site --user-base
-    - name: Pip
-      run: |
-        pip --version
-    - name: Python3
-      run: |
-        python3 --version
-        python3 -m site --user-base
-    - name: Pip3
-      run: |
-        pip3 --version
-    # Vagrant
-    - name: Vagrant
-      run: |
-        ( command -v vagrant && vagrant --version ) || true
+      - uses: actions/checkout@v4
+      - name: env
+        run: env
+      # Base
+      - name: Git
+        run: git --version
+      - name: Make
+        run: make --version
+      - name: Install brew Make
+        run: |
+          brew install make
+          echo "/usr/local/opt/make/libexec/gnubin" >> $GITHUB_PATH
+      - name: Make
+        run: make --version
+      - name: CMake
+        run: |
+          cmake -version
+          cmake -G || true
+      - name: GCC
+        run: gcc --version
+      - name: G++
+        run: g++ --version
+      - name: Clang
+        run: clang --version
+      - name: CPU Flags
+        run: "sysctl -a | grep machdep.cpu.features | cut -f2 -d: | tr . _"
+      # .Net
+      - name: .NET
+        run: dotnet --info
+      # Java
+      - name: Java
+        run: mvn --version
+      # Python
+      - name: Python
+        run: |
+          python --version
+          python -m site --user-base
+      - name: Pip
+        run: |
+          pip --version
+      - name: Python3
+        run: |
+          python3 --version
+          python3 -m site --user-base
+      - name: Pip3
+        run: |
+          pip3 --version
+      # Vagrant
+      - name: Vagrant
+        run: |
+          ( command -v vagrant && vagrant --version ) || true
 
   windows:
-    runs-on: windows-latest
+    strategy:
+      matrix:
+        runner: [
+          windows-latest,
+          windows-2022,
+          windows-2019,
+        ]
+      fail-fast: false # Don't cancel all jobs if one fails.
+    name: Windows(${{matrix.runner}})
+    runs-on: ${{matrix.runner}}
     steps:
-    - uses: actions/checkout@v4
-    - name: env
-      run: "Get-ChildItem Env:"
-    # Base
-    - name: Git
-      run: git --version
-    - name: Make
-      run: make --version
-    - name: CMake
-      run: |
-        cmake -version
-        cmake -G || true
-    # .Net
-    - name: .NET
-      run: dotnet --info
-    # Java
-    - name: Java
-      run: mvn --version
-    # Python
-    - name: Python
-      run: |
-        python --version
-        python -m site --user-base
-    - uses: actions/setup-python@v2
-      with:
-        python-version: '3.10'
-    - name: Python
-      run: |
-        python --version
-        python -m site --user-base
-    - name: Python3
-      run: |
-        python3 --version
-        python3 -m site --user-base
-    - name: Pip
-      run: |
-        pip --version
+      - uses: actions/checkout@v4
+      - name: env
+        run: "Get-ChildItem Env:"
+      # Base
+      - name: Git
+        run: git --version
+      - name: Make
+        run: make --version
+      - name: CMake
+        run: |
+          cmake -version
+          cmake -G || true
+      # .Net
+      - name: .NET
+        run: dotnet --info
+      # Java
+      - name: Java
+        run: mvn --version
+      # Python
+      - name: Python
+        run: |
+          python --version
+          python -m site --user-base
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+      - name: Python
+        run: |
+          python --version
+          python -m site --user-base
+      - name: Python3
+        run: |
+          python3 --version
+          python3 -m site --user-base
+      - name: Pip
+        run: |
+          pip --version
