@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Hardware
+      run: lscpu
     - name: env
       run: env
     - name: Update PATH
@@ -52,6 +54,8 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Hardware
+      run: lscpu
     - name: env
       run: env
     # Base
@@ -107,6 +111,8 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Hardware
+      run: lscpu
     - name: env
       run: "Get-ChildItem Env:"
     # Base
