@@ -5,8 +5,16 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   linux:
-    name: Linux(ubuntu-latest)
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        runner: [
+          ubuntu-latest,
+          ubuntu-24.04, # ubuntu-latest
+          ubuntu-22.04,
+        ]
+      fail-fast: false # Don't cancel all jobs if one fails.
+    name: Linux(${{matrix.runner}})
+    runs-on: ${{matrix.runner}}
     steps:
       - uses: actions/checkout@v4
       - name: vagrant
@@ -37,8 +45,9 @@ jobs:
       matrix:
         runner: [
           windows-latest,
-          windows-2022,
-          windows-2019,
+          windows-2025,
+          windows-2022, # windows-latest
+          #windows-2019, # deprecated
         ]
       fail-fast: false # Don't cancel all jobs if one fails.
     name: Windows(${{matrix.runner}})
