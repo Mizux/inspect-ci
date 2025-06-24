@@ -26,7 +26,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Hardware
-        run: lscpu
+        run: |
+          cat /proc/cpuinfo | grep "flags" || true
+          lscpu || true
       - name: env
         run: env
       - name: Update PATH
@@ -40,14 +42,11 @@ jobs:
         run: |
           cmake -version
           cmake -G || true
-      - name: GCC
-        run: gcc --version
-      - name: G++
-        run: g++ --version
-      - name: Clang
-        run: clang --version
-      - name: CPU Flags
-        run: cat /proc/cpuinfo | grep "flags"
+      - name: C Compilers
+        run: |
+          gcc --version
+          g++ --version
+          clang --version
       # Java
       - name: Java
         run: mvn --version
@@ -59,13 +58,12 @@ jobs:
         run: |
           python --version
           python -m site --user-base
+          pip --version
       - name: Python3
         run: |
           python3 --version
           python3 -m site --user-base
-      - name: Pip
-        run: |
-          pip --version
+          pip3 --version
 
   macos:
     strategy:
@@ -79,6 +77,11 @@ jobs:
     runs-on: ${{matrix.runner}}
     steps:
       - uses: actions/checkout@v4
+      - name: Hardware
+        run: |
+          cat /proc/cpuinfo | grep "flags" || true
+          lscpu || true
+          sysctl -a | grep machdep.cpu.features | cut -f2 -d: | tr . _
       - name: env
         run: env
       # Base
@@ -97,13 +100,10 @@ jobs:
           cmake -version
           cmake -G || true
       - name: GCC
-        run: gcc --version
-      - name: G++
-        run: g++ --version
-      - name: Clang
-        run: clang --version
-      - name: CPU Flags
-        run: "sysctl -a | grep machdep.cpu.features | cut -f2 -d: | tr . _"
+        run: |
+          gcc --version
+          g++ --version
+          clang --version
       # .Net
       - name: .NET
         run: dotnet --info
@@ -115,20 +115,12 @@ jobs:
         run: |
           python --version
           python -m site --user-base
-      - name: Pip
-        run: |
           pip --version
       - name: Python3
         run: |
           python3 --version
           python3 -m site --user-base
-      - name: Pip3
-        run: |
           pip3 --version
-      # Vagrant
-      - name: Vagrant
-        run: |
-          ( command -v vagrant && vagrant --version ) || true
 
   windows:
     strategy:
@@ -162,21 +154,16 @@ jobs:
       - name: Java
         run: mvn --version
       # Python
+      #- uses: actions/setup-python@v2
+      #  with:
+      #    python-version: '3.10'
       - name: Python
         run: |
           python --version
           python -m site --user-base
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '3.10'
-      - name: Python
-        run: |
-          python --version
-          python -m site --user-base
+          pip --version
       - name: Python3
         run: |
           python3 --version
           python3 -m site --user-base
-      - name: Pip
-        run: |
-          pip --version
+          pip3 --version

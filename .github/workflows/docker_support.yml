@@ -30,10 +30,7 @@ jobs:
       - name: docker info
         run: docker info
       - name: Supported platforms
-        run: |
-          docker buildx ls
-          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-          docker buildx ls
+        run: docker buildx inspect || true
 
   macos:
     strategy:
@@ -49,14 +46,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: docker version
-        run: docker version
+        run: docker version || true
       - name: docker info
-        run: docker info
+        run: docker info || true
       - name: Supported platforms
-        run: |
-          docker buildx ls
-          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-          docker buildx ls
+        run: docker buildx inspect || true
 
   windows:
     strategy:
@@ -77,10 +71,8 @@ jobs:
       - name: docker info
         run: docker info
       - name: Supported platforms
-        run: |
-          docker buildx ls
-          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-          docker buildx ls
+        shell: bash
+        run: docker buildx inspect || true
       #- name: Pull image
       #  run: docker pull mcr.microsoft.com/windows:ltsc2019
       #- name: Build image
