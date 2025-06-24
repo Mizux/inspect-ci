@@ -3,6 +3,11 @@ name: Vagrant Support
 
 on: [push, pull_request, workflow_dispatch]
 
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+
+# Building using the github runner environement directly.
 jobs:
   linux:
     strategy:
