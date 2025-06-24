@@ -40,6 +40,91 @@ jobs:
       - name: virtualbox
         run: virtualbox --help || true
 
+  macos-manual:
+    strategy:
+      matrix:
+        runner: [
+          macos-latest, # M1
+          macos-13, # amd64
+          #macos-12, # deprecated
+        ]
+        box: [
+          {name: "generic/freebsd14", init_option: "--box-version 4.3.12"},
+          {name: "generic/freebsd13", init_option: "--box-version 4.3.12"},
+          {name: "generic/freebsd12", init_option: "--box-version 4.3.12"},
+          {name: "generic/freebsd11", init_option: "--box-version 4.3.12"},
+          {name: "generic/hardenedbsd13", init_option: "--box-version 4.3.12"},
+          {name: "generic/hardenedbsd12", init_option: "--box-version 4.3.12"},
+          {name: "generic/hardenedbsd11", init_option: "--box-version 4.3.12"},
+          {name: "generic/openbsd7", init_option: "--box-version 4.3.12"},
+          {name: "generic/openbsd6", init_option: "--box-version 4.3.12"},
+          {name: "generic/netbsd9", init_option: "--box-version 4.3.12"},
+          {name: "generic/netbsd8", init_option: "--box-version 4.3.12"},
+        ]
+      fail-fast: false # Don't cancel all jobs if one fails.
+    name: Manual MacOS(${{matrix.runner}},${{matrix.box.name}})
+    runs-on: ${{matrix.runner}}
+    steps:
+      - uses: actions/checkout@v4
+      # https://formulae.brew.sh/cask/virtualbox
+      - name: Virtualbox install
+        run: |
+          brew install --cask virtualbox
+      - name: virtualbox
+        run: virtualbox --help || true
+      # https://formulae.brew.sh/cask/vagrant
+      - name: Vagrant install
+        run: |
+          brew install --cask vagrant
+      - name: vagrant
+        run: vagrant --version || true
+      - name: testing Box
+        run: |
+          vagrant init ${{matrix.box.name}} ${{matrix.box.init_option}}
+          vagrant up
+
+  ubuntu-manual:
+    strategy:
+      matrix:
+        runner: [
+          ubuntu-latest,
+        ]
+        box: [
+          {name: "generic/freebsd14", init_option: "--box-version 4.3.12"},
+          {name: "generic/freebsd13", init_option: "--box-version 4.3.12"},
+          {name: "generic/freebsd12", init_option: "--box-version 4.3.12"},
+          {name: "generic/freebsd11", init_option: "--box-version 4.3.12"},
+          {name: "generic/hardenedbsd13", init_option: "--box-version 4.3.12"},
+          {name: "generic/hardenedbsd12", init_option: "--box-version 4.3.12"},
+          {name: "generic/hardenedbsd11", init_option: "--box-version 4.3.12"},
+          {name: "generic/openbsd7", init_option: "--box-version 4.3.12"},
+          {name: "generic/openbsd6", init_option: "--box-version 4.3.12"},
+          {name: "generic/netbsd9", init_option: "--box-version 4.3.12"},
+          {name: "generic/netbsd8", init_option: "--box-version 4.3.12"},
+        ]
+      fail-fast: false # Don't cancel all jobs if one fails.
+    name: Manual Linux(${{matrix.runner}},${{matrix.box.name}})
+    runs-on: ${{matrix.runner}}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Virtualbox install
+        run: |
+          sudo apt update -q
+          sudo apt install -yq virtualbox
+      - name: virtualbox
+        run: virtualbox --help || true
+      - name: Vagrant install
+        run: |
+          sudo apt update -q
+          wget https://releases.hashicorp.com/vagrant/2.4.7/vagrant_2.4.7-1_amd64.deb
+          sudo apt install -y ./vagrant_2.4.7-1_amd64.deb
+      - name: vagrant
+        run: vagrant --version || true
+      - name: testing Box
+        run: |
+          vagrant init ${{matrix.box.name}} ${{matrix.box.init_option}}
+          vagrant up
+
   windows:
     strategy:
       matrix:
