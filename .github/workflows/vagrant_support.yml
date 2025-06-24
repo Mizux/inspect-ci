@@ -28,7 +28,7 @@ jobs:
         runner: [
           macos-latest, # M1
           macos-13, # amd64
-          macos-12, # amd64
+          #macos-12, # deprecated
         ]
       fail-fast: false # Don't cancel all jobs if one fails.
     name: MacOS(${{matrix.runner}})
