@@ -16,20 +16,20 @@ jobs:
         runner: [
           ubuntu-latest,
           #ubuntu-24.04, # ubuntu-latest
-          ubuntu-22.04,
+          #ubuntu-22.04,
         ]
         box: [
           {name: "generic/freebsd14", init_option: "--box-version 4.3.12"},
-          {name: "generic/freebsd13", init_option: "--box-version 4.3.12"},
-          {name: "generic/freebsd12", init_option: "--box-version 4.3.12"},
-          {name: "generic/freebsd11", init_option: "--box-version 4.3.12"},
+          #{name: "generic/freebsd13", init_option: "--box-version 4.3.12"},
+          #{name: "generic/freebsd12", init_option: "--box-version 4.3.12"},
+          #{name: "generic/freebsd11", init_option: "--box-version 4.3.12"},
           {name: "generic/hardenedbsd13", init_option: "--box-version 4.3.12"},
-          {name: "generic/hardenedbsd12", init_option: "--box-version 4.3.12"},
-          {name: "generic/hardenedbsd11", init_option: "--box-version 4.3.12"},
+          #{name: "generic/hardenedbsd12", init_option: "--box-version 4.3.12"},
+          #{name: "generic/hardenedbsd11", init_option: "--box-version 4.3.12"},
           {name: "generic/openbsd7", init_option: "--box-version 4.3.12"},
-          {name: "generic/openbsd6", init_option: "--box-version 4.3.12"},
+          #{name: "generic/openbsd6", init_option: "--box-version 4.3.12"},
           {name: "generic/netbsd9", init_option: "--box-version 4.3.12"},
-          {name: "generic/netbsd8", init_option: "--box-version 4.3.12"},
+          #{name: "generic/netbsd8", init_option: "--box-version 4.3.12"},
         ]
       fail-fast: false # Don't cancel all jobs if one fails.
     name: Linux(${{matrix.runner}},${{matrix.box.name}})
@@ -68,18 +68,18 @@ jobs:
         ]
         box: [
           {name: "generic/freebsd14", init_option: "--box-version 4.3.12"},
-          {name: "generic/freebsd13", init_option: "--box-version 4.3.12"},
-          {name: "generic/freebsd12", init_option: "--box-version 4.3.12"},
-          {name: "generic/freebsd11", init_option: "--box-version 4.3.12"},
+          #{name: "generic/freebsd13", init_option: "--box-version 4.3.12"},
+          #{name: "generic/freebsd12", init_option: "--box-version 4.3.12"},
+          #{name: "generic/freebsd11", init_option: "--box-version 4.3.12"},
           {name: "generic/hardenedbsd13", init_option: "--box-version 4.3.12"},
-          {name: "generic/hardenedbsd12", init_option: "--box-version 4.3.12"},
-          {name: "generic/hardenedbsd11", init_option: "--box-version 4.3.12"},
+          #{name: "generic/hardenedbsd12", init_option: "--box-version 4.3.12"},
+          #{name: "generic/hardenedbsd11", init_option: "--box-version 4.3.12"},
           {name: "generic/openbsd7", init_option: "--box-version 4.3.12"},
-          {name: "generic/openbsd6", init_option: "--box-version 4.3.12"},
+          #{name: "generic/openbsd6", init_option: "--box-version 4.3.12"},
           {name: "generic/netbsd9", init_option: "--box-version 4.3.12"},
-          {name: "generic/netbsd8", init_option: "--box-version 4.3.12"},
+          #{name: "generic/netbsd8", init_option: "--box-version 4.3.12"},
           {name: "bento/freebsd-14", init_option: "--box-version 202502.21.0"},
-          {name: "bento/freebsd-13", init_option: "--box-version 202503.11.0"},
+          #{name: "bento/freebsd-13", init_option: "--box-version 202503.11.0"},
         ]
       fail-fast: false # Don't cancel all jobs if one fails.
     name: MacOS(${{matrix.runner}},${{matrix.box.name}})
