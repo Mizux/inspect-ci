@@ -54,6 +54,7 @@ jobs:
       - name: Testing Vagrant Box
         run: |
           vagrant init ${{matrix.box.name}} ${{matrix.box.init_option}}
+          cat Vagrantfile
           vagrant up
 
 ## MacOS
