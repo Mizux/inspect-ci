@@ -24,7 +24,7 @@ jobs:
     name: Linux(${{matrix.runner}})
     runs-on: ${{matrix.runner}}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: docker version
         run: docker version
       - name: docker info
@@ -43,7 +43,7 @@ jobs:
     name: MacOS(${{matrix.runner}})
     runs-on: ${{matrix.runner}}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: docker version
         run: docker version || true
       - name: docker info
@@ -64,7 +64,7 @@ jobs:
     name: Windows(${{matrix.runner}})
     runs-on: ${{matrix.runner}}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: docker version
         run: docker version
       - name: docker info
