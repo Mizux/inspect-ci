@@ -18,7 +18,7 @@ jobs:
           ubuntu-24.04, # ubuntu-latest
           ubuntu-22.04,
           ubuntu-24.04-arm, # partner runner image in Beta
-          ubuntu-22.04-arm, # partner runner image in Beta
+          ubuntu-22.04-arm # partner runner image in Beta
         ]
       fail-fast: false # Don't cancel all jobs if one fails.
     name: Linux(${{matrix.runner}})
@@ -47,6 +47,8 @@ jobs:
           gcc --version
           g++ --version
           clang --version
+      - name: CCache
+        run: ccache --version || true
       # Java
       - name: Java
         run: mvn --version
@@ -104,6 +106,8 @@ jobs:
           gcc --version
           g++ --version
           clang --version
+      - name: CCache
+        run: ccache --version || true
       # .Net
       - name: .NET
         run: dotnet --info
@@ -147,6 +151,8 @@ jobs:
         run: |
           cmake -version
           cmake -G || true
+      - name: CCache
+        run: ccache --version || true
       # .Net
       - name: .NET
         run: dotnet --info
