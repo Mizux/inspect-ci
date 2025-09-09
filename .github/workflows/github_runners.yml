@@ -148,10 +148,12 @@ jobs:
       - name: Make
         run: make --version
       - name: CMake
+        shell: bash
         run: |
           cmake -version
           cmake -G || true
       - name: CCache
+        shell: bash
         run: ccache --version || true
       # .Net
       - name: .NET
