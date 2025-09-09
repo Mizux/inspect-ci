@@ -17,10 +17,10 @@ jobs:
           [B1, B2],
           [C1, C2]
         ]
-      bar: [
-        {v1: "1.1", v2: "1.2"},
-        {v1: "2.1", v2: "2.2"},
-      ]
+        bar: [
+          {v1: "1.1", v2: "1.2"},
+          {v1: "2.1", v2: "2.2"}
+        ]
       fail-fast: false
     env:
       FIRST: ${{matrix.foo[0]}}
@@ -30,7 +30,7 @@ jobs:
       - name: Print
         run: |
           echo $FIRST $SECOND
-        echo "v1: {{matrix.bar.v1}}, v2: {{matrix.bar.v2}}"
+          echo "v1: ${{matrix.bar.v1}}, v2: ${{matrix.bar.v2}}""
 
   merge:
     runs-on: ubuntu-latest
