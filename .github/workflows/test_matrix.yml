@@ -30,7 +30,7 @@ jobs:
       - name: Print
         run: |
           echo $FIRST $SECOND
-          echo "v1: ${{matrix.bar.v1}}, v2: ${{matrix.bar.v2}}""
+          echo "v1: ${{matrix.bar.v1}}, v2: ${{matrix.bar.v2}}"
 
   merge:
     runs-on: ubuntu-latest
