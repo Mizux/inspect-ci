@@ -20,18 +20,3 @@ note: each steps are independent, so env setting are forgotten.
 you'll need to use
 [`GITHUB_ENV`](https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-an-environment-variable) or
 [`GITHUB_PATH`](https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#adding-a-system-path)
-
-# Appveyor CI (deprecated)
-
-[![Build Status][appveyor_status]][appveyor_link]
-
-[appveyor_status]: https://ci.appveyor.com/api/projects/status/sfsuy65vk2k0xkf6/branch/master?svg=true
-[appveyor_link]: https://ci.appveyor.com/project/Mizux/inspect-ci/branch/master
-
-## Reference
-
-* windows: https://www.appveyor.com/docs/windows-images-software/
-
-# Travis-CI (deprecated)
-
-They do not provide good free for oss tier anymore.
