@@ -63,8 +63,7 @@ jobs:
       matrix:
         runner: [
           macos-latest, # M1
-          #macos-14, # macos-latest
-          macos-13, # amd64
+          macos-15-intel,
         ]
         box: [
           {name: "generic/freebsd14", init_option: "--box-version 4.3.12"},
