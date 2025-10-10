@@ -5,9 +5,12 @@ Just a sandbox project to reverse various runner configuration when using a `lan
 # Github Action runners
 
 [![Build Status][github_status]][github_link]
+[![Build Status][docker_status]][docker_link]
 
 [github_status]: ./../../actions/workflows/github_runners.yml/badge.svg
 [github_link]: ./../../actions/workflows/github_runners.yml
+[docker_status]: ./../../actions/workflows/docker_support.yml/badge.svg
+[docker_link]: ./../../actions/workflows/docker_support.yml
 
 ## Reference
 
