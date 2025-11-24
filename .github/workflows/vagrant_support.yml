@@ -35,7 +35,7 @@ jobs:
     name: Linux(${{matrix.runner}},${{matrix.box.name}})
     runs-on: ${{matrix.runner}}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Virtualbox Check
         run: virtualbox --help || true
       - name: Vagrant Check
@@ -84,7 +84,7 @@ jobs:
     name: MacOS(${{matrix.runner}},${{matrix.box.name}})
     runs-on: ${{matrix.runner}}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Virtualbox check
         run: virtualbox --help || true
       - name: Vagrant check
@@ -118,7 +118,7 @@ jobs:
     name: Windows(${{matrix.runner}})
     runs-on: ${{matrix.runner}}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: vagrant
         shell: bash
         run: vagrant --version || true
