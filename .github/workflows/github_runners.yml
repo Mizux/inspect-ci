@@ -24,7 +24,7 @@ jobs:
     name: Linux(${{matrix.runner}})
     runs-on: ${{matrix.runner}}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Hardware
         run: |
           cat /proc/cpuinfo || true
@@ -82,7 +82,7 @@ jobs:
     name: MacOS(${{matrix.runner}})
     runs-on: ${{matrix.runner}}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Hardware
         run: |
           cat /proc/cpuinfo | grep "flags" || true
@@ -143,7 +143,7 @@ jobs:
     name: Windows(${{matrix.runner}})
     runs-on: ${{matrix.runner}}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: env
         run: "Get-ChildItem Env:"
       # Base
